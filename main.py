@@ -10,12 +10,17 @@ import subprocess
 if __name__ == '__main__':
     path = os.path.abspath(".")
     ps = path.split("/")
-    target_directory = "ps[len(ps)-1]"
+    target_directory = ps[len(ps)-1]
+    tg = ps[len(ps)-1]
+    filepath = "$PREFIX/lib/pyex/"+tg
+    print(filepath)
+    print(tg)
     print(f"This is the directory right now: {len(ps)} => {ps}")
     print(f"And This is our target directory: {target_directory}")
-    with open("session.c", "w") as f:
-        f.write("#include <stdio.h>\n")
-        f.write("int main() {\n")
-        f.write(f"int session = system(\"python3 main.py\");\n")
-        f.write("}\n")
-    os.system("gcc -o " + target_directory + ".1 session.c")
+    subprocess.run("echo $PREFIX", shell=True)
+    if os.path.exists(filepath):
+        print(f"You have the `{tg}` directory already.")
+    else:
+        subprocess.run("mkdir $PREFIX/lib/pyex/"+tg, shell=True)
+    subprocess.run("cp main.py $PREFIX/lib/pyex/"+tg, shell=True)
+
