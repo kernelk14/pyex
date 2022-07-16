@@ -1,0 +1,3 @@
+title "pyex"
+file "main.py"
+project run
